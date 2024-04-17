@@ -2,22 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour
+namespace Script
 {
-    [SerializeField] private float speed = 5f;
-    
-    void Update()
+    public class BulletController : MonoBehaviour
     {
-        Vector2 newPosition = transform.position;
-        newPosition += Vector2.up * (speed * Time.deltaTime);
-        
-        if (CameraManager.IsWithinCameraView(newPosition))
+        [SerializeField] private float speed = 5f;
+
+        private void Update()
         {
-            transform.position = newPosition;
+            Vector2 newPosition = transform.position;
+            newPosition += Vector2.up * (speed * Time.deltaTime);
+
+            if (CameraManager.IsWithinCameraView(newPosition))
+            {
+                transform.position = newPosition;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
-        else
-        {
-            Destroy(gameObject);
-        }    
     }
 }

@@ -2,34 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MooveController : MonoBehaviour
+namespace Script
 {
-    [SerializeField] private float speed = 5f;
-
-    void Update()
+    public class MooveController : MonoBehaviour
     {
-        Vector2 newPosition = transform.position;
-        
-        if (Input.GetKey(KeyCode.LeftArrow))
+        [SerializeField] private float speed = 5f;
+
+        private void Update()
         {
-            newPosition += Vector2.left * (speed * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            newPosition += Vector2.right * (speed * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            newPosition += Vector2.up * (speed * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            newPosition += Vector2.down * (speed * Time.deltaTime);
-        }
-        
-        if (CameraManager.IsWithinCameraView(newPosition))
-        {
-            transform.position = newPosition;
+            Vector2 newPosition = transform.position;
+
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                newPosition += Vector2.left * (speed * Time.deltaTime);
+            }
+
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                newPosition += Vector2.right * (speed * Time.deltaTime);
+            }
+
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                newPosition += Vector2.up * (speed * Time.deltaTime);
+            }
+
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                newPosition += Vector2.down * (speed * Time.deltaTime);
+            }
+
+            if (CameraManager.IsWithinCameraView(newPosition))
+            {
+                transform.position = newPosition;
+            }
         }
     }
 }
