@@ -5,7 +5,6 @@ using UnityEngine;
 public class MooveController : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
-    [SerializeField] private Camera mainCamera;
 
     void Update()
     {
@@ -28,15 +27,9 @@ public class MooveController : MonoBehaviour
             newPosition += Vector2.down * (speed * Time.deltaTime);
         }
         
-        if (IsWithinCameraView(newPosition))
+        if (CameraManager.IsWithinCameraView(newPosition))
         {
             transform.position = newPosition;
         }
-    }
-    
-    bool IsWithinCameraView(Vector2 position)
-    {
-        Vector2 viewportPosition = mainCamera.WorldToViewportPoint(position);
-        return viewportPosition.x >= 0.015 && viewportPosition.x <= 0.985 && viewportPosition.y >= 0.025 && viewportPosition.y <= 0.97;
     }
 }
