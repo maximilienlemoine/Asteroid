@@ -3,22 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class ShootController : MonoBehaviour
+namespace Script
 {
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private bool autoShoot = false;
-    [SerializeField] private float shootCooldown = 1f;
-    
-    private float timeSinceLastShot = 0f;
-    
-    void Update()
+    public class ShootController : MonoBehaviour
     {
-        timeSinceLastShot += Time.deltaTime;
-        
-        if (Input.GetKeyDown(KeyCode.Space) || autoShoot && timeSinceLastShot >= shootCooldown)
+        [SerializeField] private GameObject bulletPrefab;
+        [SerializeField] private bool isAutoShoot = false;
+        [SerializeField] private float shootCooldown = 1f;
+
+        private float _timeSinceLastShot = 0f;
+
+        private void Update()
         {
-            timeSinceLastShot = 0f;
+            _timeSinceLastShot += Time.deltaTime;
+            
+            if (Input.GetKeyDown(KeyCode.A)) SetAutoShoot(!isAutoShoot);
+
+            if (!Input.GetKeyDown(KeyCode.Space) && (!isAutoShoot || !(_timeSinceLastShot >= shootCooldown))) return;
+            
+            _timeSinceLastShot = 0f;
             Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        }
+        
+        public void SetAutoShoot(bool autoShoot)
+        {
+            this.isAutoShoot = autoShoot;
         }
     }
 }
